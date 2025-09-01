@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { Mail, Plus, X, Send } from 'lucide-react'
-import { FileWithPreview, TransferData } from '../types'
+import { FileWithPreview } from '../types';
 
 interface RecipientFormProps {
     files: FileWithPreview[]
