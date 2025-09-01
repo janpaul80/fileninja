@@ -14,7 +14,6 @@ const FileDropzone = ({
     files,
     onFilesAdded,
     onFileRemove,
-    error
 }: FileDropzoneProps) => {
     const MAX_TOTAL_SIZE = 3 * 1024 * 1024 * 1024 // 3GB in bytes
 
