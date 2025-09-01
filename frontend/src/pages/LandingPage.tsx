@@ -22,5 +22,4 @@ const LandingPage = () => {
 
 export default LandingPage
 
-Fix: remove unused Link.
 
