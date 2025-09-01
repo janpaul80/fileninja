@@ -1,4 +1,3 @@
-import { Link } from 'react-router-dom'
 import Header from '../components/Header'
 import Hero from '../components/Hero'
 import ValuePropositions from '../components/ValuePropositions'
@@ -22,3 +21,6 @@ const LandingPage = () => {
 }
 
 export default LandingPage
+
+Fix: remove unused Link.
+
