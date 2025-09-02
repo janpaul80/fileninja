@@ -58,12 +58,12 @@ const Pricing = () => {
                             layout: 'vertical',
                             label: 'subscribe'
                         },
-                        createSubscription: function(data: any, actions: any) {
+                        createSubscription: function(_data: any, actions: any) {
                             return actions.subscription.create({
                                 plan_id: plan.planId
                             });
                         },
-                        onApprove: function(data: any, actions: any) {
+                        onApprove: function(data: any, _actions: any) {
                             alert(`Subscription successful! Your subscription ID is: ${data.subscriptionID}`);
                             // You can add more sophisticated success handling here
                         }
