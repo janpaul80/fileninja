@@ -20,8 +20,9 @@ const LoginPage = () => {
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault()
+        console.log('Login form submitted!', formData)
+        alert('Login form submitted successfully! Check console for details.')
         // TODO: Implement actual login logic
-        console.log('Login attempt:', formData)
     }
 
     return (
@@ -119,7 +120,8 @@ const LoginPage = () => {
 
                                 <button
                                     type="submit"
-                                    className="w-full btn-primary py-3"
+                                    className="w-full btn-primary py-3 touch-manipulation"
+                                    style={{ WebkitTapHighlightColor: 'transparent' }}
                                 >
                                     Sign In
                                 </button>

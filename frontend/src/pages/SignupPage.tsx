@@ -24,8 +24,9 @@ const SignupPage = () => {
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault()
+        console.log('Form submitted!', formData)
+        alert('Form submitted successfully! Check console for details.')
         // TODO: Implement actual signup logic
-        console.log('Signup attempt:', formData)
     }
 
     return (
@@ -171,7 +172,8 @@ const SignupPage = () => {
 
                                 <button
                                     type="submit"
-                                    className="w-full btn-primary py-3"
+                                    className="w-full btn-primary py-3 touch-manipulation"
+                                    style={{ WebkitTapHighlightColor: 'transparent' }}
                                 >
                                     Create Account
                                 </button>
