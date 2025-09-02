@@ -52,8 +52,8 @@ const ContactPage = () => {
         {
             icon: Phone,
             title: 'Phone',
-            content: '+31 (0) 20 123 4567',
-            href: 'tel:+31201234567'
+            content: '+31 612776705',
+            href: 'tel:+31612776705'
         },
         {
             icon: MapPin,

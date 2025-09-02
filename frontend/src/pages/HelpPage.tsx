@@ -201,7 +201,7 @@ const HelpPage = () => {
                                 <p className="text-gray-600 mb-4">
                                     Browse our comprehensive guides and tutorials.
                                 </p>
-                                <a href="#" className="text-ninja-600 hover:text-ninja-700 font-medium">
+                                <a href="/docs" className="text-ninja-600 hover:text-ninja-700 font-medium">
                                     View Docs →
                                 </a>
                             </div>
@@ -216,7 +216,7 @@ const HelpPage = () => {
                                 <p className="text-gray-600 mb-4">
                                     Watch step-by-step video guides.
                                 </p>
-                                <a href="#" className="text-ninja-600 hover:text-ninja-700 font-medium">
+                                <a href="/videos" className="text-ninja-600 hover:text-ninja-700 font-medium">
                                     Watch Videos →
                                 </a>
                             </div>
