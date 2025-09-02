@@ -1,6 +1,6 @@
 import Header from '../components/Header'
 import Footer from '../components/Footer'
-import { UserPlus, Mail, Lock, Eye, EyeOff, Check } from 'lucide-react'
+import { UserPlus, Mail, Eye, EyeOff } from 'lucide-react'
 import { useState } from 'react'
 
 const SignupPage = () => {
