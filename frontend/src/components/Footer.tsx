@@ -152,7 +152,7 @@ const Footer = () => {
                         © {currentYear} FileNinja. All rights reserved.
                     </p>
                     <p className="text-gray-400 text-sm mt-2 md:mt-0">
-                        Made with ❤️ for seamless file sharing
+                        Design by <a href="https://janpaul.at" target="_blank" rel="noopener noreferrer" className="text-ninja-300 hover:text-ninja-200 transition-colors duration-200">JP Hartmann</a>
                     </p>
                 </div>
             </div>

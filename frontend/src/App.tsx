@@ -10,6 +10,8 @@ import HelpPage from './pages/HelpPage'
 import StatusPage from './pages/StatusPage'
 import DocumentationPage from './pages/DocumentationPage'
 import VideoTutorialsPage from './pages/VideoTutorialsPage'
+import LoginPage from './pages/LoginPage'
+import SignupPage from './pages/SignupPage'
 
 function App() {
     return (
@@ -25,6 +27,8 @@ function App() {
             <Route path="/status" element={<StatusPage />} />
             <Route path="/docs" element={<DocumentationPage />} />
             <Route path="/videos" element={<VideoTutorialsPage />} />
+            <Route path="/login" element={<LoginPage />} />
+            <Route path="/signup" element={<SignupPage />} />
         </Routes>
     )
 }

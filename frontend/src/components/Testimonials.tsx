@@ -8,7 +8,7 @@ const Testimonials = () => {
             company: 'TechFlow Solutions',
             content: 'FileNinja has revolutionized how our team shares large design files. The interface is intuitive, and the 3GB limit is perfect for our creative assets. Highly recommended!',
             rating: 5,
-            avatar: 'https://images.unsplash.com/photo-1494790108755-2616b612b786?w=150&h=150&fit=crop&crop=face&auto=format'
+            avatar: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=150&h=150&fit=crop&crop=face&auto=format'
         },
         {
             name: 'Marcus Rodriguez',

@@ -30,11 +30,17 @@ const Header = () => {
                     </nav>
 
                     {/* Mobile Navigation */}
-                    <div className="md:hidden flex items-center space-x-3">
-                        <Link to="/login" className="text-gray-600 hover:text-ninja-600 transition-colors duration-200 font-medium text-sm">
+                    <div className="md:hidden flex items-center space-x-3 relative z-20">
+                        <Link 
+                            to="/login" 
+                            className="text-gray-600 hover:text-ninja-600 transition-colors duration-200 font-medium text-sm px-3 py-2 rounded-lg hover:bg-gray-100 cursor-pointer touch-manipulation"
+                        >
                             Log In
                         </Link>
-                        <Link to="/signup" className="btn-primary text-sm py-2 px-4">
+                        <Link 
+                            to="/signup" 
+                            className="bg-ninja-600 hover:bg-ninja-700 text-white font-semibold text-sm py-2 px-4 rounded-lg transition-all duration-200 shadow-md hover:shadow-lg cursor-pointer touch-manipulation"
+                        >
                             Sign Up
                         </Link>
                     </div>
