@@ -1,14 +1,14 @@
 import { Link } from 'react-router-dom'
-import { Zap, Twitter, Facebook, Instagram, Linkedin } from 'lucide-react'
+import { Zap, Twitter, Facebook, Instagram, Linkedin, CreditCard, Bitcoin } from 'lucide-react'
 
 const Footer = () => {
     const currentYear = new Date().getFullYear()
 
     const footerLinks = [
-        { name: 'Terms', href: '/terms' },
-        { name: 'Privacy', href: '/privacy' },
-        { name: 'Contact', href: '/contact' },
-        { name: 'About', href: '/about' }
+        { name: 'Terms of Service', href: '/terms' },
+        { name: 'Privacy Policy', href: '/privacy' },
+        { name: 'Contact Us', href: '/contact' },
+        { name: 'About Us', href: '/about' }
     ]
 
     const socialLinks = [
@@ -16,6 +16,21 @@ const Footer = () => {
         { name: 'Facebook', icon: Facebook, href: '#' },
         { name: 'Instagram', icon: Instagram, href: '#' },
         { name: 'LinkedIn', icon: Linkedin, href: '#' }
+    ]
+
+    const paymentMethods = [
+        {
+            name: 'PayPal',
+            icon: CreditCard,
+            description: 'Secure online payments',
+            color: 'text-blue-600'
+        },
+        {
+            name: 'Cryptocurrency',
+            icon: Bitcoin,
+            description: 'BTC, ETH, and more',
+            color: 'text-orange-500'
+        }
     ]
 
     return (
@@ -80,7 +95,7 @@ const Footer = () => {
                             </li>
                             <li>
                                 <Link
-                                    to="/faq"
+                                    to="/help"
                                     className="text-gray-400 hover:text-ninja-300 transition-colors duration-200"
                                 >
                                     FAQ
@@ -95,6 +110,31 @@ const Footer = () => {
                                 </Link>
                             </li>
                         </ul>
+                    </div>
+                </div>
+
+                {/* Payment Methods */}
+                <div className="border-t border-gray-800 mt-8 pt-8">
+                    <h3 className="text-lg font-semibold mb-4 text-center">Accepted Payment Methods</h3>
+                    <div className="flex justify-center items-center space-x-8 mb-6">
+                        {paymentMethods.map((method) => (
+                            <div
+                                key={method.name}
+                                className="flex flex-col items-center space-y-2 group"
+                            >
+                                <div className={`w-12 h-12 bg-gray-800 rounded-lg flex items-center justify-center group-hover:bg-ninja-600 transition-all duration-200 ${method.color}`}>
+                                    <method.icon className="w-6 h-6" />
+                                </div>
+                                <div className="text-center">
+                                    <h4 className="font-medium text-white text-sm">
+                                        {method.name}
+                                    </h4>
+                                    <p className="text-xs text-gray-400">
+                                        {method.description}
+                                    </p>
+                                </div>
+                            </div>
+                        ))}
                     </div>
                 </div>
 

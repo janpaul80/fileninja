@@ -17,17 +17,23 @@ const Header = () => {
                     </Link>
 
                     {/* Navigation */}
-                    <nav className="hidden md:flex items-center space-x-8">
-                        <Link to="/" className="text-gray-600 hover:text-ninja-600 transition-colors duration-200 font-medium">
-                            Home
-                        </Link>
-                        <Link to="/app" className="btn-secondary">
+                    <nav className="hidden md:flex items-center space-x-6">
+                        <Link to="/app" className="text-gray-600 hover:text-ninja-600 transition-colors duration-200 font-medium">
                             Go to App
+                        </Link>
+                        <Link to="/login" className="text-gray-600 hover:text-ninja-600 transition-colors duration-200 font-medium">
+                            Log In
+                        </Link>
+                        <Link to="/signup" className="btn-primary text-sm py-2 px-6">
+                            Sign Up
                         </Link>
                     </nav>
 
                     {/* Mobile menu button */}
-                    <div className="md:hidden">
+                    <div className="md:hidden flex items-center space-x-2">
+                        <Link to="/login" className="text-gray-600 hover:text-ninja-600 transition-colors duration-200 font-medium text-sm">
+                            Log In
+                        </Link>
                         <Link to="/app" className="btn-secondary text-sm py-2 px-4">
                             App
                         </Link>
