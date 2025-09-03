@@ -58,14 +58,28 @@ const upload = multer({
     }
 })
 
-// Email configuration (configure with your SMTP service)
+// Email configuration (TransIP SMTP)
 const transporter = nodemailer.createTransport({
-    host: process.env.SMTP_HOST || 'smtp.gmail.com',
-    port: process.env.SMTP_PORT || 587,
-    secure: false,
+    host: process.env.SMTP_HOST || 'mail.transip.nl',
+    port: parseInt(process.env.SMTP_PORT) || 587,
+    secure: process.env.SMTP_PORT === '465', // true for 465, false for other ports
     auth: {
-        user: process.env.SMTP_USER || 'your-email@gmail.com',
-        pass: process.env.SMTP_PASS || 'your-app-password'
+        user: process.env.SMTP_USER,
+        pass: process.env.SMTP_PASS
+    },
+    tls: {
+        // Do not fail on invalid certs (useful for some hosting providers)
+        rejectUnauthorized: false
+    }
+})
+
+// Verify SMTP connection configuration
+transporter.verify((error, success) => {
+    if (error) {
+        console.error('❌ SMTP configuration error:', error.message)
+        console.log('📧 Please check your SMTP settings in the .env file')
+    } else {
+        console.log('✅ SMTP server is ready to send emails')
     }
 })
 
@@ -368,6 +382,135 @@ app.get('/api/transfers/:transferId/download', (req, res) => {
     }
 })
 
+// OAuth callback routes
+app.get('/auth/google/callback', async (req, res) => {
+    try {
+        const { code } = req.query
+        
+        if (!code) {
+            return res.redirect(`${process.env.FRONTEND_URL || 'http://localhost:3000'}/login?error=oauth_error`)
+        }
+
+        // Exchange code for access token
+        const tokenResponse = await fetch('https://oauth2.googleapis.com/token', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: new URLSearchParams({
+                client_id: process.env.GOOGLE_CLIENT_ID || '862935629876-7odom0l6c8n502gdh4jsm6vjc9da34n3.apps.googleusercontent.com',
+                client_secret: process.env.GOOGLE_SECRET_ID || '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',
+                code: code,
+                grant_type: 'authorization_code',
+                redirect_uri: `${process.env.BACKEND_URL || 'http://localhost:5000'}/auth/google/callback`
+            })
+        })
+
+        const tokenData = await tokenResponse.json()
+        
+        if (!tokenData.access_token) {
+            return res.redirect(`${process.env.FRONTEND_URL || 'http://localhost:3000'}/login?error=oauth_error`)
+        }
+
+        // Get user info from Google
+        const userResponse = await fetch('https://www.googleapis.com/oauth2/v2/userinfo', {
+            headers: {
+                'Authorization': `Bearer ${tokenData.access_token}`
+            }
+        })
+
+        const userData = await userResponse.json()
+        
+        // Create user object
+        const user = {
+            id: userData.id,
+            name: userData.name,
+            email: userData.email,
+            plan: 'basic',
+            provider: 'google'
+        }
+
+        // Store user in localStorage via redirect with data
+        const userDataEncoded = encodeURIComponent(JSON.stringify(user))
+        res.redirect(`${process.env.FRONTEND_URL || 'http://localhost:3000'}/auth/success?user=${userDataEncoded}`)
+
+    } catch (error) {
+        console.error('Google OAuth error:', error)
+        res.redirect(`${process.env.FRONTEND_URL || 'http://localhost:3000'}/login?error=oauth_error`)
+    }
+})
+
+app.get('/auth/github/callback', async (req, res) => {
+    try {
+        const { code } = req.query
+        
+        if (!code) {
+            return res.redirect(`${process.env.FRONTEND_URL || 'http://localhost:3000'}/login?error=oauth_error`)
+        }
+
+        // Exchange code for access token
+        const tokenResponse = await fetch('https://github.com/login/oauth/access_token', {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: new URLSearchParams({
+                client_id: process.env.GITHUB_CLIENT_ID || 'Ov23liPNlFEih9qK0oem',
+                client_secret: process.env.GITHUB_SECRET_ID || '84972e2b9c9e815c59faf20e987e6919a8ec8507',
+                code: code
+            })
+        })
+
+        const tokenData = await tokenResponse.json()
+        
+        if (!tokenData.access_token) {
+            return res.redirect(`${process.env.FRONTEND_URL || 'http://localhost:3000'}/login?error=oauth_error`)
+        }
+
+        // Get user info from GitHub
+        const userResponse = await fetch('https://api.github.com/user', {
+            headers: {
+                'Authorization': `Bearer ${tokenData.access_token}`,
+                'Accept': 'application/vnd.github.v3+json'
+            }
+        })
+
+        const userData = await userResponse.json()
+        
+        // Get user email (might be private)
+        let email = userData.email
+        if (!email) {
+            const emailResponse = await fetch('https://api.github.com/user/emails', {
+                headers: {
+                    'Authorization': `Bearer ${tokenData.access_token}`,
+                    'Accept': 'application/vnd.github.v3+json'
+                }
+            })
+            const emails = await emailResponse.json()
+            const primaryEmail = emails.find(e => e.primary)
+            email = primaryEmail ? primaryEmail.email : userData.login + '@github.com'
+        }
+        
+        // Create user object
+        const user = {
+            id: userData.id.toString(),
+            name: userData.name || userData.login,
+            email: email,
+            plan: 'basic',
+            provider: 'github'
+        }
+
+        // Store user in localStorage via redirect with data
+        const userDataEncoded = encodeURIComponent(JSON.stringify(user))
+        res.redirect(`${process.env.FRONTEND_URL || 'http://localhost:3000'}/auth/success?user=${userDataEncoded}`)
+
+    } catch (error) {
+        console.error('GitHub OAuth error:', error)
+        res.redirect(`${process.env.FRONTEND_URL || 'http://localhost:3000'}/login?error=oauth_error`)
+    }
+})
+
 // Health check
 app.get('/api/health', (req, res) => {
     res.json({
@@ -375,6 +518,45 @@ app.get('/api/health', (req, res) => {
         timestamp: new Date().toISOString(),
         transfers: transfers.size
     })
+})
+
+// Email test endpoint (for debugging SMTP configuration)
+app.post('/api/test-email', async (req, res) => {
+    try {
+        const { to, subject, message } = req.body
+        
+        if (!to || !subject || !message) {
+            return res.status(400).json({
+                success: false,
+                message: 'Missing required fields: to, subject, message'
+            })
+        }
+
+        const testEmail = {
+            from: process.env.SMTP_FROM || 'noreply@fileninja.com',
+            to: to,
+            subject: subject,
+            html: `
+                <h2>FileNinja Email Test</h2>
+                <p>${message}</p>
+                <p>This is a test email from your FileNinja server.</p>
+                <p>Timestamp: ${new Date().toISOString()}</p>
+            `
+        }
+
+        await transporter.sendMail(testEmail)
+        
+        res.json({
+            success: true,
+            message: 'Test email sent successfully'
+        })
+    } catch (error) {
+        console.error('Email test error:', error)
+        res.status(500).json({
+            success: false,
+            message: 'Failed to send test email: ' + error.message
+        })
+    }
 })
 
 // Error handling middleware
