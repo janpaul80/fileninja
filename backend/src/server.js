@@ -59,10 +59,13 @@ const upload = multer({
 })
 
 // Email configuration (TransIP SMTP)
+const smtpPort = parseInt(process.env.SMTP_PORT) || 587
+const isSecurePort = smtpPort === 465
+
 const transporter = nodemailer.createTransport({
     host: process.env.SMTP_HOST || 'mail.transip.nl',
-    port: parseInt(process.env.SMTP_PORT) || 587,
-    secure: process.env.SMTP_PORT === '465', // true for 465, false for other ports
+    port: smtpPort,
+    secure: isSecurePort, // true for 465 (SSL), false for 587 (STARTTLS)
     auth: {
         user: process.env.SMTP_USER,
         pass: process.env.SMTP_PASS
@@ -74,6 +77,12 @@ const transporter = nodemailer.createTransport({
 })
 
 // Verify SMTP connection configuration
+console.log('📧 SMTP Configuration:')
+console.log(`   Host: ${process.env.SMTP_HOST || 'mail.transip.nl'}`)
+console.log(`   Port: ${smtpPort}`)
+console.log(`   Secure: ${isSecurePort} (${isSecurePort ? 'SSL' : 'STARTTLS'})`)
+console.log(`   User: ${process.env.SMTP_USER || 'Not set'}`)
+
 transporter.verify((error, success) => {
     if (error) {
         console.error('❌ SMTP configuration error:', error.message)
