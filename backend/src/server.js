@@ -9,6 +9,7 @@ import crypto from 'crypto'
 import path from 'path'
 import fs from 'fs'
 import cron from 'node-cron'
+import bcrypt from 'bcryptjs'
 import { fileURLToPath } from 'url'
 
 const __filename = fileURLToPath(import.meta.url)
@@ -32,6 +33,9 @@ if (!fs.existsSync(uploadsDir)) {
 
 // In-memory storage for transfers (in production, use a database)
 const transfers = new Map()
+
+// In-memory storage for users (in production, use a database)
+const users = new Map()
 
 // Multer configuration for file uploads
 const storage = multer.diskStorage({
@@ -411,6 +415,182 @@ app.get('/api/transfers/:transferId/download', (req, res) => {
     }
 })
 
+// Authentication API routes
+
+// User registration endpoint
+app.post('/api/auth/register', async (req, res) => {
+    try {
+        const { name, email, password } = req.body
+
+        // Validation
+        if (!name || !email || !password) {
+            return res.status(400).json({
+                success: false,
+                message: 'Name, email, and password are required'
+            })
+        }
+
+        // Validate email format
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+        if (!emailRegex.test(email)) {
+            return res.status(400).json({
+                success: false,
+                message: 'Invalid email format'
+            })
+        }
+
+        // Check if user already exists
+        if (users.has(email)) {
+            return res.status(409).json({
+                success: false,
+                message: 'User with this email already exists'
+            })
+        }
+
+        // Validate password strength
+        if (password.length < 8) {
+            return res.status(400).json({
+                success: false,
+                message: 'Password must be at least 8 characters long'
+            })
+        }
+
+        // Hash password
+        const saltRounds = 12
+        const hashedPassword = await bcrypt.hash(password, saltRounds)
+
+        // Create user object
+        const user = {
+            id: crypto.randomUUID(),
+            name: name.trim(),
+            email: email.toLowerCase().trim(),
+            password: hashedPassword,
+            plan: 'basic',
+            provider: 'email',
+            createdAt: new Date().toISOString(),
+            lastLogin: null
+        }
+
+        // Store user
+        users.set(email.toLowerCase().trim(), user)
+
+        // Send welcome email
+        try {
+            const welcomeEmail = {
+                from: process.env.SMTP_FROM,
+                to: email,
+                subject: 'Welcome to FileNinja! 🥷',
+                html: `
+                    <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+                        <div style="background: linear-gradient(135deg, #7C3AED, #A855F7); padding: 40px; text-align: center; border-radius: 10px 10px 0 0;">
+                            <h1 style="color: white; margin: 0; font-size: 28px;">Welcome to FileNinja!</h1>
+                            <p style="color: white; margin: 10px 0 0 0; font-size: 16px;">Send big files the ninja way</p>
+                        </div>
+                        <div style="background: white; padding: 40px; border-radius: 0 0 10px 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+                            <h2 style="color: #333; margin-top: 0;">Hi ${name}!</h2>
+                            <p style="color: #666; line-height: 1.6; font-size: 16px;">
+                                Thank you for joining FileNinja! You're now ready to send files up to 3GB with our secure, 
+                                fast, and reliable file transfer service.
+                            </p>
+                            <div style="background: #F3F4F6; padding: 20px; border-radius: 8px; margin: 20px 0;">
+                                <h3 style="color: #333; margin-top: 0;">What you can do now:</h3>
+                                <ul style="color: #666; line-height: 1.8;">
+                                    <li>📁 Upload and share files up to 3GB</li>
+                                    <li>🔒 Secure file transfers with encryption</li>
+                                    <li>📧 Email notifications for recipients</li>
+                                    <li>⏰ 7-day file expiration for security</li>
+                                </ul>
+                            </div>
+                            <div style="text-align: center; margin: 30px 0;">
+                                <a href="${process.env.FRONTEND_URL}/app" 
+                                   style="background: #7C3AED; color: white; padding: 15px 30px; text-decoration: none; border-radius: 8px; font-weight: bold; display: inline-block;">
+                                    Start Sharing Files
+                                </a>
+                            </div>
+                            <p style="color: #999; font-size: 14px; text-align: center; margin-top: 30px;">
+                                Need help? Contact us at <a href="mailto:hello@fileninja.nl" style="color: #7C3AED;">hello@fileninja.nl</a>
+                            </p>
+                        </div>
+                    </div>
+                `
+            }
+
+            await transporter.sendMail(welcomeEmail)
+            console.log(`✅ Welcome email sent to ${email}`)
+        } catch (emailError) {
+            console.error('Failed to send welcome email:', emailError)
+            // Don't fail registration if email fails
+        }
+
+        // Return success (don't include password hash)
+        const { password: _, ...userResponse } = user
+        res.status(201).json({
+            success: true,
+            message: 'User registered successfully',
+            user: userResponse
+        })
+
+    } catch (error) {
+        console.error('Registration error:', error)
+        res.status(500).json({
+            success: false,
+            message: 'Internal server error'
+        })
+    }
+})
+
+// User login endpoint
+app.post('/api/auth/login', async (req, res) => {
+    try {
+        const { email, password } = req.body
+
+        // Validation
+        if (!email || !password) {
+            return res.status(400).json({
+                success: false,
+                message: 'Email and password are required'
+            })
+        }
+
+        // Find user
+        const user = users.get(email.toLowerCase().trim())
+        if (!user) {
+            return res.status(401).json({
+                success: false,
+                message: 'Invalid email or password'
+            })
+        }
+
+        // Verify password
+        const isValidPassword = await bcrypt.compare(password, user.password)
+        if (!isValidPassword) {
+            return res.status(401).json({
+                success: false,
+                message: 'Invalid email or password'
+            })
+        }
+
+        // Update last login
+        user.lastLogin = new Date().toISOString()
+        users.set(email.toLowerCase().trim(), user)
+
+        // Return success (don't include password hash)
+        const { password: _, ...userResponse } = user
+        res.json({
+            success: true,
+            message: 'Login successful',
+            user: userResponse
+        })
+
+    } catch (error) {
+        console.error('Login error:', error)
+        res.status(500).json({
+            success: false,
+            message: 'Internal server error'
+        })
+    }
+})
+
 // OAuth callback routes
 app.get('/auth/google/callback', async (req, res) => {
     try {
@@ -456,8 +636,13 @@ app.get('/auth/google/callback', async (req, res) => {
             name: userData.name,
             email: userData.email,
             plan: 'basic',
-            provider: 'google'
+            provider: 'google',
+            createdAt: new Date().toISOString(),
+            lastLogin: new Date().toISOString()
         }
+
+        // Store user in our system (for consistency with email/password users)
+        users.set(userData.email.toLowerCase().trim(), user)
 
         // Store user in localStorage via redirect with data
         const userDataEncoded = encodeURIComponent(JSON.stringify(user))
@@ -527,8 +712,13 @@ app.get('/auth/github/callback', async (req, res) => {
             name: userData.name || userData.login,
             email: email,
             plan: 'basic',
-            provider: 'github'
+            provider: 'github',
+            createdAt: new Date().toISOString(),
+            lastLogin: new Date().toISOString()
         }
+
+        // Store user in our system (for consistency with email/password users)
+        users.set(email.toLowerCase().trim(), user)
 
         // Store user in localStorage via redirect with data
         const userDataEncoded = encodeURIComponent(JSON.stringify(user))

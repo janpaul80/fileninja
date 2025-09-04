@@ -95,12 +95,27 @@ const RecipientForm = ({
                 body: formData
             })
 
-            const result = await response.json()
-
+            // Check if response is ok first
             if (!response.ok) {
-                // Get detailed error message from backend
-                const errorMessage = result.message || `Upload failed: ${response.statusText}`
+                // Try to parse JSON error response
+                let errorMessage = `Upload failed: ${response.statusText}`
+                try {
+                    const errorResult = await response.json()
+                    errorMessage = errorResult.message || errorMessage
+                } catch (parseError) {
+                    // If JSON parsing fails, use the status text
+                    console.error('Failed to parse error response:', parseError)
+                }
                 throw new Error(errorMessage)
+            }
+
+            // Parse successful response
+            let result
+            try {
+                result = await response.json()
+            } catch (parseError) {
+                console.error('Failed to parse success response:', parseError)
+                throw new Error('Invalid response from server. Please try again.')
             }
 
             if (result.success) {
