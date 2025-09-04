@@ -138,7 +138,7 @@ const DownloadPage = () => {
                             <img 
                                 src="/logo.png" 
                                 alt="FileNinja" 
-                                className="h-10 w-auto group-hover:scale-105 transition-transform duration-200"
+                                className="h-12 md:h-14 w-auto group-hover:scale-105 transition-transform duration-200"
                             />
                         </Link>
                         <div className="text-sm text-gray-600">

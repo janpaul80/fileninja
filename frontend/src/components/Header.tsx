@@ -9,7 +9,7 @@ const Header = () => {
         <header className="fixed top-0 left-0 right-0 z-50 bg-white/90 backdrop-blur-md border-b border-gray-100">
             <div className="container-max flex items-center justify-between h-16">
                 <Link to="/" className="flex items-center group">
-                    <img src="/logo.png" alt="FileNinja" className="h-10 w-auto group-hover:scale-105 transition-transform duration-200" />
+                    <img src="/logo.png" alt="FileNinja" className="h-12 md:h-14 w-auto group-hover:scale-105 transition-transform duration-200" />
                 </Link>
 
                 <nav>

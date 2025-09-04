@@ -53,7 +53,7 @@ const FileTransferApp = () => {
                             <img 
                                 src="/logo.png" 
                                 alt="FileNinja" 
-                                className="h-8 w-auto"
+                                className="h-12 md:h-14 w-auto"
                             />
                         </div>
                         <div className="text-sm text-gray-600">
