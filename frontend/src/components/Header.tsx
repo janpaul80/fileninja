@@ -1,5 +1,9 @@
 import { Link } from 'react-router-dom'
+<<<<<<< HEAD
 import { LogOut } from 'lucide-react'
+=======
+import { Zap, LogOut } from 'lucide-react'
+>>>>>>> d4023afc5647958d271898ce20e8ed614a9333c6
 import { useAuth } from '../contexts/AuthContext'
 
 const Header = () => {
