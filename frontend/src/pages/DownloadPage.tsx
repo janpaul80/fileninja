@@ -83,7 +83,7 @@ const DownloadPage = () => {
             <div className="min-h-screen bg-gradient-to-br from-ninja-50 via-blue-50 to-indigo-100 flex items-center justify-center">
                 <div className="text-center">
                     <div className="w-16 h-16 bg-ninja-600 rounded-full flex items-center justify-center mx-auto mb-4 animate-spin">
-                        <Zap className="w-8 h-8 text-white" />
+                        <img src="/logo.png" alt="FileNinja Logo" className="w-12 h-auto" />
                     </div>
                     <p className="text-lg text-gray-600">Loading transfer information...</p>
                 </div>
