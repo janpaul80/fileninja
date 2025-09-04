@@ -8,7 +8,7 @@ import { CheckCircle, Loader2 } from 'lucide-react'
 const OAuthSuccessPage = () => {
     const [searchParams] = useSearchParams()
     const navigate = useNavigate()
-    const { user, setUser } = useAuth()
+    const { setUser } = useAuth()
 
     useEffect(() => {
         const userParam = searchParams.get('user')

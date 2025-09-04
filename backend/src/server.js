@@ -11,6 +11,7 @@ import fs from 'fs'
 import cron from 'node-cron'
 import bcrypt from 'bcryptjs'
 import { fileURLToPath } from 'url'
+import { subscribeToNewsletter, testMailchimpConnection } from './services/mailchimp.js'
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
@@ -522,6 +523,23 @@ app.post('/api/auth/register', async (req, res) => {
             // Don't fail registration if email fails
         }
 
+        // Subscribe to Mailchimp newsletter
+        try {
+            const nameParts = name.trim().split(' ')
+            const firstName = nameParts[0]
+            const lastName = nameParts.slice(1).join(' ')
+            
+            const mailchimpSuccess = await subscribeToNewsletter(email, firstName, lastName)
+            if (mailchimpSuccess) {
+                console.log(`✅ User ${email} subscribed to newsletter`)
+            } else {
+                console.log(`⚠️ Failed to subscribe ${email} to newsletter`)
+            }
+        } catch (mailchimpError) {
+            console.error('Mailchimp subscription error:', mailchimpError)
+            // Don't fail registration if Mailchimp fails
+        }
+
         // Return success (don't include password hash)
         const { password: _, ...userResponse } = user
         res.status(201).json({
@@ -644,6 +662,23 @@ app.get('/auth/google/callback', async (req, res) => {
         // Store user in our system (for consistency with email/password users)
         users.set(userData.email.toLowerCase().trim(), user)
 
+        // Subscribe to Mailchimp newsletter
+        try {
+            const nameParts = userData.name.trim().split(' ')
+            const firstName = nameParts[0]
+            const lastName = nameParts.slice(1).join(' ')
+            
+            const mailchimpSuccess = await subscribeToNewsletter(userData.email, firstName, lastName)
+            if (mailchimpSuccess) {
+                console.log(`✅ OAuth user ${userData.email} subscribed to newsletter`)
+            } else {
+                console.log(`⚠️ Failed to subscribe OAuth user ${userData.email} to newsletter`)
+            }
+        } catch (mailchimpError) {
+            console.error('Mailchimp subscription error for OAuth user:', mailchimpError)
+            // Don't fail OAuth if Mailchimp fails
+        }
+
         // Store user in localStorage via redirect with data
         const userDataEncoded = encodeURIComponent(JSON.stringify(user))
         res.redirect(`${process.env.FRONTEND_URL}/auth/success?user=${userDataEncoded}`)
@@ -720,6 +755,23 @@ app.get('/auth/github/callback', async (req, res) => {
         // Store user in our system (for consistency with email/password users)
         users.set(email.toLowerCase().trim(), user)
 
+        // Subscribe to Mailchimp newsletter
+        try {
+            const nameParts = (userData.name || userData.login).trim().split(' ')
+            const firstName = nameParts[0]
+            const lastName = nameParts.slice(1).join(' ')
+            
+            const mailchimpSuccess = await subscribeToNewsletter(email, firstName, lastName)
+            if (mailchimpSuccess) {
+                console.log(`✅ GitHub OAuth user ${email} subscribed to newsletter`)
+            } else {
+                console.log(`⚠️ Failed to subscribe GitHub OAuth user ${email} to newsletter`)
+            }
+        } catch (mailchimpError) {
+            console.error('Mailchimp subscription error for GitHub OAuth user:', mailchimpError)
+            // Don't fail OAuth if Mailchimp fails
+        }
+
         // Store user in localStorage via redirect with data
         const userDataEncoded = encodeURIComponent(JSON.stringify(user))
         res.redirect(`${process.env.FRONTEND_URL}/auth/success?user=${userDataEncoded}`)
@@ -727,6 +779,24 @@ app.get('/auth/github/callback', async (req, res) => {
     } catch (error) {
         console.error('GitHub OAuth error:', error)
         res.redirect(`${process.env.FRONTEND_URL}/login?error=oauth_error`)
+    }
+})
+
+// Test Mailchimp connection
+app.get('/api/test-mailchimp', async (req, res) => {
+    try {
+        const isConnected = await testMailchimpConnection()
+        res.json({
+            success: isConnected,
+            message: isConnected ? 'Mailchimp connection successful' : 'Mailchimp connection failed',
+            timestamp: new Date().toISOString()
+        })
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            message: 'Mailchimp test error',
+            error: error.message
+        })
     }
 })
 

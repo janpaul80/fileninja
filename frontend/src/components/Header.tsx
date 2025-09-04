@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import { Zap, User, LogOut } from 'lucide-react'
+import { LogOut } from 'lucide-react'
 import { useAuth } from '../contexts/AuthContext'
 
 const Header = () => {
@@ -10,13 +10,12 @@ const Header = () => {
             <div className="container-max">
                 <div className="flex items-center justify-between h-16">
                     {/* Logo */}
-                    <Link to="/" className="flex items-center space-x-2 group">
-                        <div className="w-8 h-8 bg-gradient-to-br from-ninja-500 to-ninja-700 rounded-lg flex items-center justify-center group-hover:scale-110 transition-transform duration-200">
-                            <Zap className="w-5 h-5 text-white" />
-                        </div>
-                        <span className="text-xl font-bold text-gray-900 group-hover:text-ninja-600 transition-colors duration-200">
-                            FileNinja
-                        </span>
+                    <Link to="/" className="flex items-center group">
+                        <img 
+                            src="/logo.png" 
+                            alt="FileNinja" 
+                            className="h-10 w-auto group-hover:scale-105 transition-transform duration-200"
+                        />
                     </Link>
 
                     {/* Desktop Navigation */}

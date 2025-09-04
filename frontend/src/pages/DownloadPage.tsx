@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useParams, Link } from 'react-router-dom'
-import { Download, Mail, Clock, File, Zap, ArrowLeft } from 'lucide-react'
+import { Download, Mail, Clock, File, ArrowLeft } from 'lucide-react'
 import { TransferInfo } from '../types'
 
 const DownloadPage = () => {
@@ -134,13 +134,12 @@ const DownloadPage = () => {
             <header className="bg-white/90 backdrop-blur-md border-b border-gray-100 sticky top-0 z-40">
                 <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="flex items-center justify-between h-16">
-                        <Link to="/" className="flex items-center space-x-2 group">
-                            <div className="w-8 h-8 bg-gradient-to-br from-ninja-500 to-ninja-700 rounded-lg flex items-center justify-center group-hover:scale-110 transition-transform duration-200">
-                                <Zap className="w-5 h-5 text-white" />
-                            </div>
-                            <span className="text-xl font-bold text-gray-900 group-hover:text-ninja-600 transition-colors duration-200">
-                                FileNinja
-                            </span>
+                        <Link to="/" className="flex items-center group">
+                            <img 
+                                src="/logo.png" 
+                                alt="FileNinja" 
+                                className="h-10 w-auto group-hover:scale-105 transition-transform duration-200"
+                            />
                         </Link>
                         <div className="text-sm text-gray-600">
                             File Transfer

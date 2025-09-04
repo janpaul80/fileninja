@@ -1,5 +1,4 @@
 import { useState } from 'react'
-import { Zap } from 'lucide-react'
 import FileDropzone from '../components/FileDropzone'
 import RecipientForm from '../components/RecipientForm'
 import TransferSuccess from '../components/TransferSuccess'
@@ -50,11 +49,12 @@ const FileTransferApp = () => {
             <header className="bg-white/90 backdrop-blur-md border-b border-gray-100 sticky top-0 z-40">
                 <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="flex items-center justify-between h-16">
-                        <div className="flex items-center space-x-2">
-                            <div className="w-8 h-8 bg-gradient-to-br from-ninja-500 to-ninja-700 rounded-lg flex items-center justify-center">
-                                <Zap className="w-5 h-5 text-white" />
-                            </div>
-                            <span className="text-xl font-bold text-gray-900">FileNinja</span>
+                        <div className="flex items-center">
+                            <img 
+                                src="/logo.png" 
+                                alt="FileNinja" 
+                                className="h-8 w-auto"
+                            />
                         </div>
                         <div className="text-sm text-gray-600">
                             Up to 3GB • No signup required
