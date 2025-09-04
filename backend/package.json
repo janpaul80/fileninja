@@ -5,7 +5,7 @@
     "main": "src/server.js",
     "type": "module",
     "scripts": {
-        "start": "node src/server.js",
+        "start": "node -r dotenv/config src/server.js",
         "dev": "nodemon src/server.js",
         "test": "echo \"Error: no test specified\" && exit 1"
     },
@@ -28,7 +28,8 @@
         "crypto": "^1.0.1",
         "path": "^0.12.7",
         "fs": "^0.0.1-security",
-        "node-cron": "^3.0.3"
+        "node-cron": "^3.0.3",
+        "dotenv": "^16.3.1"
     },
     "devDependencies": {
         "nodemon": "^3.0.2"

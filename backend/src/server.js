@@ -59,11 +59,31 @@ const upload = multer({
 })
 
 // Email configuration (TransIP SMTP)
-const smtpPort = parseInt(process.env.SMTP_PORT) || 587
+// Validate required environment variables
+if (!process.env.SMTP_HOST) {
+    throw new Error('SMTP_HOST environment variable is required')
+}
+if (!process.env.SMTP_PORT) {
+    throw new Error('SMTP_PORT environment variable is required')
+}
+if (!process.env.SMTP_USER) {
+    throw new Error('SMTP_USER environment variable is required')
+}
+if (!process.env.SMTP_PASS) {
+    throw new Error('SMTP_PASS environment variable is required')
+}
+if (!process.env.SMTP_FROM) {
+    throw new Error('SMTP_FROM environment variable is required')
+}
+if (!process.env.FRONTEND_URL) {
+    throw new Error('FRONTEND_URL environment variable is required')
+}
+
+const smtpPort = parseInt(process.env.SMTP_PORT)
 const isSecurePort = smtpPort === 465
 
 const transporter = nodemailer.createTransport({
-    host: process.env.SMTP_HOST || 'mail.transip.nl',
+    host: process.env.SMTP_HOST,
     port: smtpPort,
     secure: isSecurePort, // true for 465 (SSL), false for 587 (STARTTLS)
     auth: {
@@ -78,10 +98,10 @@ const transporter = nodemailer.createTransport({
 
 // Verify SMTP connection configuration
 console.log('📧 SMTP Configuration:')
-console.log(`   Host: ${process.env.SMTP_HOST || 'mail.transip.nl'}`)
+console.log(`   Host: ${process.env.SMTP_HOST}`)
 console.log(`   Port: ${smtpPort}`)
 console.log(`   Secure: ${isSecurePort} (${isSecurePort ? 'SSL' : 'STARTTLS'})`)
-console.log(`   User: ${process.env.SMTP_USER || 'Not set'}`)
+console.log(`   User: ${process.env.SMTP_USER}`)
 
 transporter.verify((error, success) => {
     if (error) {
@@ -99,7 +119,7 @@ const generateTransferId = () => {
 
 // Send email notifications
 const sendTransferEmails = async (transferId, fromEmail, toEmails, message) => {
-    const downloadUrl = `${process.env.FRONTEND_URL || 'http://localhost:3000'}/download/${transferId}`
+    const downloadUrl = `${process.env.FRONTEND_URL}/download/${transferId}`
 
     const emailTemplate = `
     <h2>FileNinja - New File Transfer</h2>
@@ -397,7 +417,7 @@ app.get('/auth/google/callback', async (req, res) => {
         const { code } = req.query
         
         if (!code) {
-            return res.redirect(`${process.env.FRONTEND_URL || 'http://localhost:3000'}/login?error=oauth_error`)
+            return res.redirect(`${process.env.FRONTEND_URL}/login?error=oauth_error`)
         }
 
         // Exchange code for access token
@@ -418,7 +438,7 @@ app.get('/auth/google/callback', async (req, res) => {
         const tokenData = await tokenResponse.json()
         
         if (!tokenData.access_token) {
-            return res.redirect(`${process.env.FRONTEND_URL || 'http://localhost:3000'}/login?error=oauth_error`)
+            return res.redirect(`${process.env.FRONTEND_URL}/login?error=oauth_error`)
         }
 
         // Get user info from Google
@@ -441,11 +461,11 @@ app.get('/auth/google/callback', async (req, res) => {
 
         // Store user in localStorage via redirect with data
         const userDataEncoded = encodeURIComponent(JSON.stringify(user))
-        res.redirect(`${process.env.FRONTEND_URL || 'http://localhost:3000'}/auth/success?user=${userDataEncoded}`)
+        res.redirect(`${process.env.FRONTEND_URL}/auth/success?user=${userDataEncoded}`)
 
     } catch (error) {
         console.error('Google OAuth error:', error)
-        res.redirect(`${process.env.FRONTEND_URL || 'http://localhost:3000'}/login?error=oauth_error`)
+        res.redirect(`${process.env.FRONTEND_URL}/login?error=oauth_error`)
     }
 })
 
@@ -454,7 +474,7 @@ app.get('/auth/github/callback', async (req, res) => {
         const { code } = req.query
         
         if (!code) {
-            return res.redirect(`${process.env.FRONTEND_URL || 'http://localhost:3000'}/login?error=oauth_error`)
+            return res.redirect(`${process.env.FRONTEND_URL}/login?error=oauth_error`)
         }
 
         // Exchange code for access token
@@ -474,7 +494,7 @@ app.get('/auth/github/callback', async (req, res) => {
         const tokenData = await tokenResponse.json()
         
         if (!tokenData.access_token) {
-            return res.redirect(`${process.env.FRONTEND_URL || 'http://localhost:3000'}/login?error=oauth_error`)
+            return res.redirect(`${process.env.FRONTEND_URL}/login?error=oauth_error`)
         }
 
         // Get user info from GitHub
@@ -512,11 +532,11 @@ app.get('/auth/github/callback', async (req, res) => {
 
         // Store user in localStorage via redirect with data
         const userDataEncoded = encodeURIComponent(JSON.stringify(user))
-        res.redirect(`${process.env.FRONTEND_URL || 'http://localhost:3000'}/auth/success?user=${userDataEncoded}`)
+        res.redirect(`${process.env.FRONTEND_URL}/auth/success?user=${userDataEncoded}`)
 
     } catch (error) {
         console.error('GitHub OAuth error:', error)
-        res.redirect(`${process.env.FRONTEND_URL || 'http://localhost:3000'}/login?error=oauth_error`)
+        res.redirect(`${process.env.FRONTEND_URL}/login?error=oauth_error`)
     }
 })
 
