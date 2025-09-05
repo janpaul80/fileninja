@@ -610,7 +610,8 @@ app.post('/api/auth/login', async (req, res) => {
 })
 
 // OAuth callback routes
-app.get('/auth/google/callback', async (req, res) => {
+
+app.get('/auth/microsoft/callback', async (req, res) => {
     try {
         const { code } = req.query
         
@@ -619,30 +620,33 @@ app.get('/auth/google/callback', async (req, res) => {
         }
 
         // Exchange code for access token
-        const tokenResponse = await fetch('https://oauth2.googleapis.com/token', {
+        const tokenResponse = await fetch('https://login.microsoftonline.com/common/oauth2/v2.0/token', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded',
             },
             body: new URLSearchParams({
-                client_id: process.env.GOOGLE_CLIENT_ID || '862935629876-7odom0l6c8n502gdh4jsm6vjc9da34n3.apps.googleusercontent.com',
-                client_secret: process.env.GOOGLE_SECRET_ID || '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',
+                client_id: process.env.MICROSOFT_CLIENT_ID,
+                client_secret: process.env.MICROSOFT_CLIENT_SECRET,
                 code: code,
                 grant_type: 'authorization_code',
-                redirect_uri: `${process.env.BACKEND_URL || 'http://localhost:5000'}/auth/google/callback`
+                redirect_uri: `${process.env.BACKEND_URL || 'http://localhost:5000'}/auth/microsoft/callback`,
+                scope: 'openid profile email'
             })
         })
 
         const tokenData = await tokenResponse.json()
         
         if (!tokenData.access_token) {
+            console.error('Microsoft OAuth token error:', tokenData)
             return res.redirect(`${process.env.FRONTEND_URL}/login?error=oauth_error`)
         }
 
-        // Get user info from Google
-        const userResponse = await fetch('https://www.googleapis.com/oauth2/v2/userinfo', {
+        // Get user info from Microsoft Graph
+        const userResponse = await fetch('https://graph.microsoft.com/v1.0/me', {
             headers: {
-                'Authorization': `Bearer ${tokenData.access_token}`
+                'Authorization': `Bearer ${tokenData.access_token}`,
+                'Content-Type': 'application/json'
             }
         })
 
@@ -651,31 +655,31 @@ app.get('/auth/google/callback', async (req, res) => {
         // Create user object
         const user = {
             id: userData.id,
-            name: userData.name,
-            email: userData.email,
+            name: userData.displayName || userData.userPrincipalName,
+            email: userData.mail || userData.userPrincipalName,
             plan: 'basic',
-            provider: 'google',
+            provider: 'microsoft',
             createdAt: new Date().toISOString(),
             lastLogin: new Date().toISOString()
         }
 
         // Store user in our system (for consistency with email/password users)
-        users.set(userData.email.toLowerCase().trim(), user)
+        users.set(user.email.toLowerCase().trim(), user)
 
         // Subscribe to Mailchimp newsletter
         try {
-            const nameParts = userData.name.trim().split(' ')
+            const nameParts = user.name.trim().split(' ')
             const firstName = nameParts[0]
             const lastName = nameParts.slice(1).join(' ')
             
-            const mailchimpSuccess = await subscribeToNewsletter(userData.email, firstName, lastName)
+            const mailchimpSuccess = await subscribeToNewsletter(user.email, firstName, lastName)
             if (mailchimpSuccess) {
-                console.log(`✅ OAuth user ${userData.email} subscribed to newsletter`)
+                console.log(`✅ Microsoft OAuth user ${user.email} subscribed to newsletter`)
             } else {
-                console.log(`⚠️ Failed to subscribe OAuth user ${userData.email} to newsletter`)
+                console.log(`⚠️ Failed to subscribe Microsoft OAuth user ${user.email} to newsletter`)
             }
         } catch (mailchimpError) {
-            console.error('Mailchimp subscription error for OAuth user:', mailchimpError)
+            console.error('Mailchimp subscription error for Microsoft OAuth user:', mailchimpError)
             // Don't fail OAuth if Mailchimp fails
         }
 
@@ -684,7 +688,7 @@ app.get('/auth/google/callback', async (req, res) => {
         res.redirect(`${process.env.FRONTEND_URL}/auth/success?user=${userDataEncoded}`)
 
     } catch (error) {
-        console.error('Google OAuth error:', error)
+        console.error('Microsoft OAuth error:', error)
         res.redirect(`${process.env.FRONTEND_URL}/login?error=oauth_error`)
     }
 })
