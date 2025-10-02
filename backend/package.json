@@ -7,7 +7,7 @@
     "scripts": {
         "start": "node -r dotenv/config src/server.js",
         "dev": "nodemon -r dotenv/config src/server.js",
-        "test": "echo \"Error: no test specified\" && exit 1"
+        "test": "node src/verify-filename.js"
     },
     "keywords": [
         "file-transfer",

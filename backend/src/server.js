@@ -51,7 +51,8 @@ const storage = multer.diskStorage({
     filename: (req, file, cb) => {
         // Sanitize filename to prevent directory traversal
         const sanitizedName = path.basename(file.originalname).replace(/[^a-zA-Z0-9.-]/g, '_')
-        cb(null, `${Date.now()}-${sanitizedName}`)
+        const randomPrefix = crypto.randomBytes(4).toString('hex')
+        cb(null, `${Date.now()}-${randomPrefix}-${sanitizedName}`)
     }
 })
 
