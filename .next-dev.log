@@ -1,0 +1,596 @@
+
+> fileninja@0.1.0 dev
+> next dev -p 3005
+
+  ▲ Next.js 14.2.5
+  - Local:        http://localhost:3005
+  - Environments: .env.local
+
+ ✓ Starting...
+ ✓ Ready in 22.8s
+ ○ Compiling / ...
+The user aborted a request.
+
+Retrying 1/3...
+The user aborted a request.
+
+Retrying 1/3...
+ ✓ Compiled / in 32.2s (583 modules)
+ GET / 200 in 33129ms
+ GET / 200 in 151ms
+ GET / 200 in 317ms
+ ○ Compiling /pricing ...
+ ✓ Compiled /pricing in 6.9s (572 modules)
+ GET /pricing 200 in 10454ms
+ ○ Compiling /login ...
+ ✓ Compiled /login in 6.8s (674 modules)
+ GET /login 200 in 9271ms
+ ○ Compiling /signup ...
+ ✓ Compiled /signup in 4.4s (681 modules)
+ GET /signup 200 in 6537ms
+ GET /signup?plan=pro 200 in 259ms
+ GET /signup?plan=basic&cycle=yearly 200 in 258ms
+ ○ Compiling /dashboard ...
+ ✓ Compiled /dashboard in 2.7s (778 modules)
+ GET /dashboard 307 in 5486ms
+ ○ Compiling /api/stripe/checkout ...
+ ✓ Compiled /api/stripe/checkout in 2.7s (718 modules)
+ POST /api/stripe/checkout 400 in 3213ms
+ ○ Compiling /api/stripe/portal ...
+ ✓ Compiled /api/stripe/portal in 2.5s (720 modules)
+ POST /api/stripe/portal 401 in 2886ms
+ ○ Compiling /api/stripe/webhook ...
+ ✓ Compiled /api/stripe/webhook in 799ms (722 modules)
+[stripe/webhook] signature verify failed: No signatures found matching the expected signature for payload. Are you passing the raw request body you received from Stripe? 
+ If a webhook request is being forwarded by a third-party tool, ensure that the exact request body, including JSON formatting and new line style, is preserved.
+
+Learn more about webhook signing and explore webhook integration examples for various frameworks at https://docs.stripe.com/webhooks/signature
+
+ POST /api/stripe/webhook 400 in 959ms
+ GET / 200 in 2926ms
+ GET /pricing 200 in 2141ms
+ GET /login 200 in 1385ms
+ GET /signup 200 in 1909ms
+ GET /signup?plan=pro 200 in 2389ms
+ GET /signup?plan=basic&cycle=yearly 200 in 1637ms
+ GET /dashboard 307 in 1101ms
+ POST /api/stripe/checkout 401 in 343ms
+ POST /api/stripe/portal 401 in 309ms
+[stripe/webhook] signature verify failed: No signatures found matching the expected signature for payload. Are you passing the raw request body you received from Stripe? 
+ If a webhook request is being forwarded by a third-party tool, ensure that the exact request body, including JSON formatting and new line style, is preserved.
+
+Learn more about webhook signing and explore webhook integration examples for various frameworks at https://docs.stripe.com/webhooks/signature
+
+ POST /api/stripe/webhook 400 in 263ms
+ GET / 200 in 1093ms
+ POST /api/stripe/checkout 401 in 228ms
+ ✓ Compiled in 8.6s (858 modules)
+ ✓ Compiled in 3.5s (580 modules)
+ ✓ Compiled in 1056ms (292 modules)
+ GET /pricing 200 in 3496ms
+ ○ Compiling /api/stripe/checkout ...
+ ✓ Compiled /api/stripe/checkout in 1584ms (566 modules)
+ POST /api/stripe/checkout 401 in 3114ms
+ ○ Compiling /login ...
+ ✓ Compiled /login in 1930ms (678 modules)
+ GET /login?next=%2Fpricing%3Fplan%3Dpro%26cycle%3Dyearly 200 in 3181ms
+ ○ Compiling /signup ...
+ ✓ Compiled /signup in 1734ms (683 modules)
+ GET / 200 in 1688ms
+ GET / 200 in 1927ms
+ GET /pricing 200 in 1245ms
+ GET /login 200 in 814ms
+ GET /signup 200 in 631ms
+ GET /signup?plan=pro 200 in 7540ms
+ GET /signup?plan=basic&cycle=yearly 200 in 917ms
+ ○ Compiling /dashboard ...
+ ✓ Compiled /dashboard in 9.6s (500 modules)
+ GET /dashboard 307 in 10474ms
+ ○ Compiling /api/stripe/checkout ...
+ ✓ Compiled /api/stripe/checkout in 1429ms (718 modules)
+ POST /api/stripe/checkout 401 in 3212ms
+ ○ Compiling /api/stripe/portal ...
+ ✓ Compiled /api/stripe/portal in 1478ms (720 modules)
+ POST /api/stripe/portal 401 in 1928ms
+ ○ Compiling /api/stripe/webhook ...
+ ✓ Compiled /api/stripe/webhook in 924ms (722 modules)
+[stripe/webhook] signature verify failed: No signatures found matching the expected signature for payload. Are you passing the raw request body you received from Stripe? 
+ If a webhook request is being forwarded by a third-party tool, ensure that the exact request body, including JSON formatting and new line style, is preserved.
+
+Learn more about webhook signing and explore webhook integration examples for various frameworks at https://docs.stripe.com/webhooks/signature
+
+ POST /api/stripe/webhook 400 in 1195ms
+ GET / 200 in 1669ms
+ GET /pricing 200 in 3036ms
+ GET /login 200 in 2579ms
+ GET /signup 200 in 5767ms
+ GET /signup?plan=pro 200 in 9073ms
+ GET /signup?plan=basic&cycle=yearly 200 in 1101ms
+ GET /dashboard 307 in 365ms
+ POST /api/stripe/checkout 401 in 144ms
+ POST /api/stripe/portal 401 in 101ms
+[stripe/webhook] signature verify failed: No signatures found matching the expected signature for payload. Are you passing the raw request body you received from Stripe? 
+ If a webhook request is being forwarded by a third-party tool, ensure that the exact request body, including JSON formatting and new line style, is preserved.
+
+Learn more about webhook signing and explore webhook integration examples for various frameworks at https://docs.stripe.com/webhooks/signature
+
+ POST /api/stripe/webhook 400 in 63ms
+ GET / 200 in 2483ms
+ ○ Compiling /_not-found ...
+ ✓ Compiled /_not-found in 8.9s (700 modules)
+ GET /about 404 in 986ms
+ GET /terms 404 in 120ms
+ ⨯ ./src/components/icons/index.tsx
+Error: 
+  [31mx[0m Expected ',', got 'export'
+     ,-[[36;1;4mC:\Users\hartm\fileninja\src\components\icons\index.tsx[0m:152:1]
+ [2m152[0m |     <path d="M18.244 2H21.5l-7.523 8.6L22.5 22h-6.93l-5.43-7.103L3.86 22H.6l8.04-9.196L1.5 2h7.07l4.91 6.49L18.244 2Zm-1.214 18h1.92L7.06 4H5l12.03 16Z" />
+ [2m153[0m |   </svg>
+ [2m154[0m | 
+ [2m155[0m | export const NinjaIcon = ({ size, ...p }: IconProps) => (
+     : [31;1m^^^^^^[0m
+ [2m156[0m |   <svg {...base(size)} {...p}>
+ [2m157[0m |     <circle cx="12" cy="12" r="9" />
+ [2m157[0m |     <path d="M3 11h18" />
+     `----
+
+Caused by:
+    Syntax Error
+
+Import trace for requested module:
+./src/components/icons/index.tsx
+./src/components/UploadWidget.tsx
+ ⨯ ./src/components/icons/index.tsx
+Error: 
+  [31mx[0m Unexpected token `svg`. Expected jsx identifier
+     ,-[[36;1;4mC:\Users\hartm\fileninja\src\components\icons\index.tsx[0m:163:1]
+ [2m163[0m | );
+ [2m164[0m | 
+ [2m165[0m | export const InstagramIcon = ({ size = 24, ...p }: IconProps) => (
+ [2m166[0m |   <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor" {...p}>
+     : [31;1m   ^^^[0m
+ [2m167[0m | 
+ [2m168[0m | export const NinjaIcon = ({ size, ...p }: IconProps) => (
+ [2m168[0m |   <svg {...base(size)} {...p}>
+     `----
+
+Caused by:
+    Syntax Error
+
+Import trace for requested module:
+./src/components/icons/index.tsx
+./src/components/UploadWidget.tsx
+ ⨯ ./src/components/icons/index.tsx
+Error: 
+  [31mx[0m Unexpected token `svg`. Expected jsx identifier
+     ,-[[36;1;4mC:\Users\hartm\fileninja\src\components\icons\index.tsx[0m:169:1]
+ [2m169[0m | );
+ [2m170[0m | 
+ [2m171[0m | export const GithubIcon = ({ size = 24, ...p }: IconProps) => (
+ [2m172[0m |   <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor" {...p}>
+     : [31;1m   ^^^[0m
+ [2m173[0m | 
+ [2m174[0m | export const NinjaIcon = ({ size, ...p }: IconProps) => (
+ [2m174[0m |   <svg {...base(size)} {...p}>
+     `----
+
+Caused by:
+    Syntax Error
+
+Import trace for requested module:
+./src/components/icons/index.tsx
+./src/components/UploadWidget.tsx
+ ⨯ ./src/components/icons/index.tsx
+Error: 
+  [31mx[0m Unexpected token `svg`. Expected jsx identifier
+     ,-[[36;1;4mC:\Users\hartm\fileninja\src\components\icons\index.tsx[0m:169:1]
+ [2m169[0m | );
+ [2m170[0m | 
+ [2m171[0m | export const GithubIcon = ({ size = 24, ...p }: IconProps) => (
+ [2m172[0m |   <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor" {...p}>
+     : [31;1m   ^^^[0m
+ [2m173[0m | 
+ [2m174[0m | export const NinjaIcon = ({ size, ...p }: IconProps) => (
+ [2m174[0m |   <svg {...base(size)} {...p}>
+     `----
+
+Caused by:
+    Syntax Error
+
+Import trace for requested module:
+./src/components/icons/index.tsx
+./src/components/UploadWidget.tsx
+ ✓ Compiled in 1604ms (697 modules)
+ ⨯ ./src/components/Footer.tsx
+Error: 
+  [31mx[0m Expression expected
+    ,-[[36;1;4mC:\Users\hartm\fileninja\src\components\Footer.tsx[0m:35:1]
+ [2m35[0m | 
+ [2m36[0m | const socials = [
+ [2m37[0m |   { Icon: XBrandIcon, href: "https://x.com/revprodev", label: "X" },
+ [2m38[0m | export default function Footer() {
+    : [31;1m^^^^^^[0m
+ [2m39[0m |   return (
+ [2m40[0m |     <footer className="bg-brand-darker text-white/80 mt-24">
+ [2m40[0m |       <div className="container-fn pt-20 pb-10">
+    `----
+
+Caused by:
+    Syntax Error
+
+Import trace for requested module:
+./src/components/Footer.tsx
+./src/app/layout.tsx
+ ○ Compiling /_error ...
+ ⨯ ./src/components/Footer.tsx
+Error: 
+  [31mx[0m Expression expected
+    ,-[[36;1;4mC:\Users\hartm\fileninja\src\components\Footer.tsx[0m:35:1]
+ [2m35[0m | 
+ [2m36[0m | const socials = [
+ [2m37[0m |   { Icon: XBrandIcon, href: "https://x.com/revprodev", label: "X" },
+ [2m38[0m | export default function Footer() {
+    : [31;1m^^^^^^[0m
+ [2m39[0m |   return (
+ [2m40[0m |     <footer className="bg-brand-darker text-white/80 mt-24">
+ [2m40[0m |       <div className="container-fn pt-20 pb-10">
+    `----
+
+Caused by:
+    Syntax Error
+
+Import trace for requested module:
+./src/components/Footer.tsx
+./src/app/layout.tsx
+ ⨯ ./src/components/Footer.tsx
+Error: 
+  [31mx[0m Expression expected
+    ,-[[36;1;4mC:\Users\hartm\fileninja\src\components\Footer.tsx[0m:35:1]
+ [2m35[0m | 
+ [2m36[0m | const socials = [
+ [2m37[0m |   { Icon: XBrandIcon, href: "https://x.com/revprodev", label: "X" },
+ [2m38[0m | export default function Footer() {
+    : [31;1m^^^^^^[0m
+ [2m39[0m |   return (
+ [2m40[0m |     <footer className="bg-brand-darker text-white/80 mt-24">
+ [2m40[0m |       <div className="container-fn pt-20 pb-10">
+    `----
+
+Caused by:
+    Syntax Error
+
+Import trace for requested module:
+./src/components/Footer.tsx
+./src/app/layout.tsx
+ ⨯ ./src/components/Footer.tsx
+Error: 
+  [31mx[0m Expression expected
+    ,-[[36;1;4mC:\Users\hartm\fileninja\src\components\Footer.tsx[0m:35:1]
+ [2m35[0m | 
+ [2m36[0m | const socials = [
+ [2m37[0m |   { Icon: XBrandIcon, href: "https://x.com/revprodev", label: "X" },
+ [2m38[0m | export default function Footer() {
+    : [31;1m^^^^^^[0m
+ [2m39[0m |   return (
+ [2m40[0m |     <footer className="bg-brand-darker text-white/80 mt-24">
+ [2m40[0m |       <div className="container-fn pt-20 pb-10">
+    `----
+
+Caused by:
+    Syntax Error
+
+Import trace for requested module:
+./src/components/Footer.tsx
+./src/app/layout.tsx
+ GET /_next/static/webpack/106975452d656ff5.webpack.hot-update.json 500 in 2154ms
+ GET /login 500 in 1683ms
+ ⚠ Fast Refresh had to perform a full reload. Read more: https://nextjs.org/docs/messages/fast-refresh-reload
+ GET /login 500 in 63ms
+ ✓ Compiled /_not-found in 3.1s (910 modules)
+ ⚠ Fast Refresh had to perform a full reload. Read more: https://nextjs.org/docs/messages/fast-refresh-reload
+ GET /_next/static/webpack/326a8b2c738e177a.webpack.hot-update.json 404 in 4196ms
+ GET /login 200 in 263ms
+ ✓ Compiled in 1096ms (924 modules)
+ ✓ Compiled in 1358ms (910 modules)
+ ✓ Compiled in 457ms (474 modules)
+ ✓ Compiled in 3.1s (919 modules)
+ ✓ Compiled in 471ms (474 modules)
+ ✓ Compiled in 499ms (474 modules)
+ ✓ Compiled in 2.4s (474 modules)
+ ✓ Compiled in 1401ms (474 modules)
+ ✓ Compiled in 1373ms (474 modules)
+ ✓ Compiled in 1396ms (474 modules)
+ ✓ Compiled in 1215ms (474 modules)
+ ✓ Compiled in 4.1s (919 modules)
+ ✓ Compiled in 1861ms (474 modules)
+ ✓ Compiled in 331ms (474 modules)
+ ✓ Compiled in 1124ms (474 modules)
+ ✓ Compiled in 9.7s (919 modules)
+ ⨯ SyntaxError: Unexpected end of JSON input
+    at JSON.parse (<anonymous>)
+    at loadManifest (C:\Users\hartm\fileninja\node_modules\next\dist\server\load-manifest.js:35:27)
+    at DevServer.getNextFontManifest (C:\Users\hartm\fileninja\node_modules\next\dist\server\next-server.js:745:47)
+    at DevServer.findPageComponents (C:\Users\hartm\fileninja\node_modules\next\dist\server\dev\next-dev-server.js:571:43)
+    at async DevServer.renderPageComponent (C:\Users\hartm\fileninja\node_modules\next\dist\server\base-server.js:1917:24)
+    at async DevServer.renderToResponseImpl (C:\Users\hartm\fileninja\node_modules\next\dist\server\base-server.js:1969:32)
+    at async DevServer.pipeImpl (C:\Users\hartm\fileninja\node_modules\next\dist\server\base-server.js:920:25)
+    at async NextNodeServer.handleCatchallRenderRequest (C:\Users\hartm\fileninja\node_modules\next\dist\server\next-server.js:272:17)
+    at async DevServer.handleRequestImpl (C:\Users\hartm\fileninja\node_modules\next\dist\server\base-server.js:816:17)
+    at async C:\Users\hartm\fileninja\node_modules\next\dist\server\dev\next-dev-server.js:339:20
+    at async Span.traceAsyncFn (C:\Users\hartm\fileninja\node_modules\next\dist\trace\trace.js:154:20)
+    at async DevServer.handleRequest (C:\Users\hartm\fileninja\node_modules\next\dist\server\dev\next-dev-server.js:336:24)
+    at async invokeRender (C:\Users\hartm\fileninja\node_modules\next\dist\server\lib\router-server.js:174:21)
+    at async handleRequest (C:\Users\hartm\fileninja\node_modules\next\dist\server\lib\router-server.js:353:24)
+    at async requestHandlerImpl (C:\Users\hartm\fileninja\node_modules\next\dist\server\lib\router-server.js:377:13)
+    at async Server.requestListener (C:\Users\hartm\fileninja\node_modules\next\dist\server\lib\start-server.js:141:13) {
+  page: '/login'
+}
+ ○ Compiling /_error ...
+ ✓ Compiled /_error in 809ms (907 modules)
+ GET /login 200 in 456ms
+ ✓ Compiled in 12.7s (919 modules)
+ ✓ Compiled in 3.8s (474 modules)
+ ✓ Compiled in 3s (919 modules)
+ ✓ Compiled in 536ms (474 modules)
+ ✓ Compiled in 1991ms (474 modules)
+ ✓ Compiled in 2.5s (474 modules)
+ ✓ Compiled in 2.1s (474 modules)
+ ✓ Compiled in 4.1s (905 modules)
+ ✓ Compiled in 558ms (474 modules)
+ ✓ Compiled in 1654ms (474 modules)
+ ✓ Compiled in 3.1s (905 modules)
+ ✓ Compiled in 537ms (474 modules)
+ ✓ Compiled in 1670ms (474 modules)
+ ✓ Compiled in 625ms (474 modules)
+ ✓ Compiled in 1615ms (474 modules)
+ ✓ Compiled in 889ms (474 modules)
+ ✓ Compiled in 2s (474 modules)
+ ✓ Compiled in 998ms (474 modules)
+ ✓ Compiled in 452ms (474 modules)
+ ✓ Compiled in 2.5s (474 modules)
+ ✓ Compiled in 6.3s (919 modules)
+ ✓ Compiled in 3.4s (474 modules)
+ ✓ Compiled in 4s (905 modules)
+ ✓ Compiled in 2.8s (474 modules)
+ ✓ Compiled in 560ms (474 modules)
+ ✓ Compiled in 3.7s (905 modules)
+ ✓ Compiled in 1184ms (474 modules)
+ ✓ Compiled in 12.6s (919 modules)
+ ✓ Compiled in 5.8s (905 modules)
+ ✓ Compiled in 1312ms (474 modules)
+ ✓ Compiled in 1216ms (474 modules)
+ GET / 200 in 519ms
+ GET /pricing 200 in 158ms
+ GET /login 200 in 94ms
+ GET /signup 200 in 160ms
+ ○ Compiling /about ...
+ ✓ Compiled /about in 9.6s (909 modules)
+ GET /about 200 in 10484ms
+ ○ Compiling /contact ...
+ ✓ Compiled /contact in 2.5s (916 modules)
+ GET /contact 200 in 3189ms
+ ○ Compiling /blog ...
+ ✓ Compiled /blog in 2.7s (920 modules)
+ GET /blog 200 in 3428ms
+ ○ Compiling /developer-api ...
+ ✓ Compiled /developer-api in 3.6s (922 modules)
+ GET /developer-api 200 in 6916ms
+ ○ Compiling /vault ...
+ ✓ Compiled /vault in 6.7s (924 modules)
+ GET /vault 200 in 7651ms
+ ○ Compiling /features ...
+ ✓ Compiled /features in 1708ms (926 modules)
+ GET /features 200 in 2205ms
+ ○ Compiling /terms ...
+ ✓ Compiled /terms in 1008ms (931 modules)
+ GET /terms 200 in 1260ms
+ ○ Compiling /privacy ...
+ ✓ Compiled /privacy in 1477ms (933 modules)
+ GET /privacy 200 in 1645ms
+ ○ Compiling /security ...
+ ✓ Compiled /security in 596ms (935 modules)
+ GET /security 200 in 744ms
+ ○ Compiling /dpa ...
+ ✓ Compiled /dpa in 2.6s (937 modules)
+ GET /dpa 200 in 2723ms
+ ○ Compiling /cookies ...
+ ✓ Compiled /cookies in 597ms (939 modules)
+ GET /cookies 200 in 771ms
+ GET / 200 in 113ms
+ GET /pricing 200 in 250ms
+ GET /login 200 in 86ms
+ GET /signup 200 in 109ms
+ GET /about 200 in 88ms
+ GET /contact 200 in 117ms
+ GET /blog 200 in 1577ms
+ GET /developer-api 200 in 1640ms
+ GET /vault 200 in 1232ms
+ GET /features 200 in 82ms
+ GET /terms 200 in 68ms
+ GET /privacy 200 in 80ms
+ GET /security 200 in 85ms
+ GET /dpa 200 in 73ms
+ GET /cookies 200 in 97ms
+ ○ Compiling /api/contact ...
+ ✓ Compiled /api/contact in 1342ms (504 modules)
+[contact] resend error: 401 {"statusCode":401,"name":"validation_error","message":"API key is invalid"}
+ POST /api/contact 502 in 3128ms
+ ✓ Compiled in 6.4s (954 modules)
+[contact] inbound message: {
+  name: 'Test',
+  email: 't@t.com',
+  subject: 'hi',
+  preview: 'hello world',
+  at: '2026-04-23T06:39:22.725Z'
+}
+[contact] resend delivery failed: 401 {"statusCode":401,"name":"validation_error","message":"API key is invalid"}
+ POST /api/contact 200 in 1897ms
+[contact] inbound message: {
+  name: 'Test User',
+  email: 'test@example.com',
+  subject: 'Hello',
+  preview: 'This is a valid message body.',
+  at: '2026-04-23T06:42:32.248Z'
+}
+[contact] resend delivery failed: 401 {"statusCode":401,"name":"validation_error","message":"API key is invalid"}
+ POST /api/contact 200 in 1941ms
+ POST /api/contact 400 in 38ms
+ POST /api/contact 400 in 92ms
+ POST /api/contact 400 in 23ms
+ POST /api/contact 400 in 27ms
+ POST /api/contact 400 in 31ms
+ POST /api/contact 400 in 34ms
+ POST /api/contact 400 in 28ms
+ POST /api/contact 400 in 34ms
+ POST /api/contact 400 in 36ms
+ POST /api/contact 400 in 36ms
+ POST /api/contact 400 in 283ms
+ POST /api/contact 400 in 356ms
+ GET / 200 in 2943ms
+ ✓ Compiled in 13.6s (924 modules)
+ ✓ Compiled in 5.3s (924 modules)
+ GET / 200 in 644ms
+ GET /pricing 200 in 1516ms
+ GET / 200 in 248ms
+ GET /pricing 200 in 197ms
+ GET /login 200 in 171ms
+ GET /signup 200 in 366ms
+ ○ Compiling /about ...
+ ✓ Compiled /about in 5.3s (448 modules)
+ GET /about 200 in 7535ms
+ ○ Compiling /contact ...
+ ✓ Compiled /contact in 3.2s (453 modules)
+ GET /contact 200 in 3952ms
+ ○ Compiling /blog ...
+ ✓ Compiled /blog in 530ms (456 modules)
+ GET /blog 200 in 1363ms
+ ○ Compiling /developer-api ...
+ ✓ Compiled /developer-api in 1931ms (458 modules)
+ GET /developer-api 200 in 2610ms
+ ○ Compiling /vault ...
+ ✓ Compiled /vault in 894ms (460 modules)
+ GET /vault 200 in 1479ms
+ ○ Compiling /features ...
+ ✓ Compiled /features in 1349ms (462 modules)
+ GET /features 200 in 2394ms
+ ○ Compiling /terms ...
+ ✓ Compiled /terms in 2.7s (466 modules)
+ GET /terms 200 in 3684ms
+ ○ Compiling /privacy ...
+ ✓ Compiled /privacy in 2.3s (468 modules)
+ GET /privacy 200 in 2700ms
+ ○ Compiling /security ...
+ ✓ Compiled /security in 708ms (470 modules)
+ GET /security 200 in 1115ms
+ ✓ Compiled /dpa in 499ms (472 modules)
+ GET /dpa 200 in 754ms
+ ○ Compiling /cookies ...
+ ✓ Compiled /cookies in 1476ms (474 modules)
+ GET /cookies 200 in 2216ms
+ GET / 200 in 6046ms
+ GET /login 200 in 962ms
+ ✓ Compiled in 31.1s (924 modules)
+ GET / 200 in 533ms
+ GET / 200 in 2317ms
+ ✓ Compiled in 8.2s (924 modules)
+ ✓ Compiled in 4.1s (924 modules)
+ GET / 200 in 1431ms
+ ○ Compiling /pricing ...
+ ✓ Compiled /pricing in 7.2s (450 modules)
+ GET /pricing 200 in 8416ms
+ GET /login 200 in 141ms
+ ○ Compiling /signup ...
+ ✓ Compiled /signup in 814ms (455 modules)
+ GET /signup 200 in 1154ms
+ GET /about 200 in 173ms
+ ○ Compiling /contact ...
+ ✓ Compiled /contact in 1042ms (460 modules)
+ GET /contact 200 in 3806ms
+ ○ Compiling /blog ...
+ ✓ Compiled /blog in 1544ms (462 modules)
+ GET /blog 200 in 1807ms
+ ○ Compiling /developer-api ...
+ ✓ Compiled /developer-api in 1558ms (464 modules)
+ GET /developer-api 200 in 2957ms
+ GET /vault 200 in 2550ms
+ ○ Compiling /features ...
+ ✓ Compiled /features in 2.5s (466 modules)
+ GET /features 200 in 3198ms
+ GET /terms 200 in 406ms
+ ○ Compiling /api/contact ...
+ ✓ Compiled /api/contact in 730ms (468 modules)
+ ✓ Compiled (498 modules)
+[contact] inbound message: {
+  name: 'Test User',
+  email: 'test@example.com',
+  subject: 'Hello',
+  preview: 'This is a valid message body.',
+  at: '2026-04-23T16:21:22.434Z'
+}
+ GET /privacy 200 in 4055ms
+ ○ Compiling /security ...
+ ✓ Compiled /security in 539ms (500 modules)
+[contact] resend delivery failed: 401 {"statusCode":401,"name":"validation_error","message":"API key is invalid"}
+ POST /api/contact 200 in 5003ms
+ GET /security 200 in 1621ms
+ ✓ Compiled /dpa in 360ms (502 modules)
+ ✓ Compiled in 2ms (502 modules)
+ POST /api/contact 400 in 2889ms
+ ✓ Compiled in 1ms (502 modules)
+ ✓ Compiled in 1ms (502 modules)
+ GET /dpa 200 in 5132ms
+ ✓ Compiled /cookies in 1ms (502 modules)
+ ✓ Compiled in 10ms (504 modules)
+ POST /api/contact 400 in 3866ms
+ ✓ Compiled in 0ms (504 modules)
+ ✓ Compiled in 1ms (504 modules)
+ ✓ Compiled in 1ms (504 modules)
+ GET /cookies 200 in 4580ms
+ ✓ Compiled in 1ms (504 modules)
+ POST /api/contact 400 in 2803ms
+ ✓ Compiled in 0ms (504 modules)
+ ✓ Compiled in 1ms (504 modules)
+ ✓ Compiled in 1ms (504 modules)
+ POST /api/contact 400 in 4450ms
+ POST /api/contact 400 in 169ms
+ POST /api/contact 400 in 32ms
+ POST /api/contact 400 in 498ms
+ POST /api/contact 400 in 33ms
+ POST /api/contact 400 in 30ms
+ POST /api/contact 400 in 43ms
+ POST /api/contact 400 in 34ms
+ POST /api/contact 400 in 457ms
+ GET / 200 in 968ms
+ GET /pricing 200 in 2194ms
+ GET /login 200 in 1510ms
+ GET /signup 200 in 879ms
+ GET /signup?plan=pro 200 in 424ms
+ GET /signup?plan=basic&cycle=yearly 200 in 219ms
+ ○ Compiling /dashboard ...
+ ✓ Compiled /dashboard in 1546ms (597 modules)
+ GET /dashboard 307 in 6730ms
+ ○ Compiling /api/stripe/checkout ...
+ ✓ Compiled /api/stripe/checkout in 1507ms (789 modules)
+ POST /api/stripe/checkout 401 in 1911ms
+ ○ Compiling /api/stripe/portal ...
+ ✓ Compiled /api/stripe/portal in 2.1s (791 modules)
+ POST /api/stripe/portal 401 in 2852ms
+ ○ Compiling /api/stripe/webhook ...
+ ✓ Compiled /api/stripe/webhook in 542ms (793 modules)
+[stripe/webhook] signature verify failed: No signatures found matching the expected signature for payload. Are you passing the raw request body you received from Stripe? 
+ If a webhook request is being forwarded by a third-party tool, ensure that the exact request body, including JSON formatting and new line style, is preserved.
+
+Learn more about webhook signing and explore webhook integration examples for various frameworks at https://docs.stripe.com/webhooks/signature
+
+ POST /api/stripe/webhook 400 in 684ms
+ GET /about 200 in 314ms
+ ○ Compiling /_not-found ...
+ ✓ Compiled /_not-found in 4s (1261 modules)
+ GET /logo.svg 404 in 4378ms
+ GET /logo.svg 404 in 4754ms
+ GET / 200 in 9830ms
+ GET /about 200 in 1418ms
+ GET /logo.svg 404 in 1130ms
+ ✓ Compiled in 22.2s (924 modules)
+ ✓ Compiled in 25.9s (924 modules)
+ ✓ Compiled in 11.4s (924 modules)
