@@ -1,9 +1,11 @@
 "use client";
 
 import * as React from "react";
-import { UploadIcon, FileIcon, SendIcon, CheckIcon, XIcon } from "./icons";
+import { UploadIcon, FileIcon, SendIcon, CheckIcon, XIcon, LoaderIcon } from "./icons";
+import { createClient } from "@/lib/supabase/client";
+import { v4 as uuidv4 } from "uuid";
 
-type Status = "idle" | "selected" | "uploading" | "complete";
+type Status = "idle" | "selected" | "uploading" | "complete" | "error";
 
 type UploadedFile = {
   name: string;
@@ -24,17 +26,21 @@ function formatBytes(bytes: number) {
 
 export default function UploadWidget() {
   const [status, setStatus] = React.useState<Status>("idle");
-  const [files, setFiles] = React.useState<UploadedFile[]>([]);
+  const [files, setFiles] = React.useState<File[]>([]);
   const [progress, setProgress] = React.useState(0);
   const [dragging, setDragging] = React.useState(false);
   const [emailTo, setEmailTo] = React.useState("");
   const [emailFrom, setEmailFrom] = React.useState("");
   const [message, setMessage] = React.useState("");
+  const [transferId, setTransferId] = React.useState<string | null>(null);
+  const [errorMessage, setErrorMessage] = React.useState("");
   const inputRef = React.useRef<HTMLInputElement | null>(null);
+
+  const supabase = createClient();
 
   const handleFiles = (list: FileList | null) => {
     if (!list || list.length === 0) return;
-    const next = Array.from(list).map((f) => ({ name: f.name, size: f.size }));
+    const next = Array.from(list);
     setFiles((prev) => [...prev, ...next]);
     setStatus("selected");
   };
@@ -53,20 +59,61 @@ export default function UploadWidget() {
     });
   };
 
-  const startUpload = () => {
+  const startUpload = async () => {
     if (files.length === 0) return;
     setStatus("uploading");
     setProgress(0);
-    const id = setInterval(() => {
-      setProgress((p) => {
-        if (p >= 100) {
-          clearInterval(id);
-          setStatus("complete");
-          return 100;
-        }
-        return Math.min(100, p + Math.random() * 9 + 3);
+    setErrorMessage("");
+
+    try {
+      const { data: { user } } = await supabase.auth.getUser();
+      const tid = uuidv4();
+      const uploadedFiles = [];
+
+      let totalUploaded = 0;
+      const totalSizeToUpload = files.reduce((acc, f) => acc + f.size, 0);
+
+      for (const file of files) {
+        const filePath = `${tid}/${file.name}`;
+        const { error: uploadError } = await supabase.storage
+          .from("fileninja-transfers")
+          .upload(filePath, file, {
+            cacheControl: "3600",
+            upsert: false
+          });
+
+        if (uploadError) throw uploadError;
+
+        uploadedFiles.push({
+          name: file.name,
+          size: file.size,
+          key: filePath
+        });
+
+        totalUploaded += file.size;
+        setProgress((totalUploaded / totalSizeToUpload) * 100);
+      }
+
+      // Create database record
+      const { error: dbError } = await supabase.from("transfers").insert({
+        id: tid,
+        owner_id: user?.id || null,
+        sender_email: emailFrom,
+        recipient_email: emailTo,
+        message: message,
+        files: uploadedFiles,
+        expires_at: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString() // 7 days
       });
-    }, 220);
+
+      if (dbError) throw dbError;
+
+      setTransferId(tid);
+      setStatus("complete");
+    } catch (err: any) {
+      console.error("Upload failed:", err);
+      setErrorMessage(err.message || "An unexpected error occurred");
+      setStatus("error");
+    }
   };
 
   const reset = () => {
@@ -76,6 +123,8 @@ export default function UploadWidget() {
     setEmailTo("");
     setEmailFrom("");
     setMessage("");
+    setTransferId(null);
+    setErrorMessage("");
   };
 
   const totalSize = files.reduce((acc, f) => acc + f.size, 0);
@@ -195,6 +244,24 @@ export default function UploadWidget() {
               {Math.round(progress)}%
             </p>
           </div>
+        ) : status === "error" ? (
+          <div className="py-8 text-center">
+            <div className="mx-auto w-16 h-16 rounded-full bg-brand-red/15 text-brand-red flex items-center justify-center mb-4">
+              <XIcon size={32} />
+            </div>
+            <p className="font-display font-bold text-brand-ink text-xl">
+              Upload failed
+            </p>
+            <p className="text-sm text-brand-ink/60 mt-1">
+              {errorMessage}
+            </p>
+            <button onClick={() => setStatus("selected")} className="btn-primary mt-6 w-full">
+              Try again
+            </button>
+            <button onClick={reset} className="text-sm text-brand-ink/50 hover:text-brand-ink mt-4 block w-full">
+              Cancel
+            </button>
+          </div>
         ) : (
           <div className="py-8 text-center">
             <div className="mx-auto w-16 h-16 rounded-full bg-brand-teal/15 text-brand-teal flex items-center justify-center mb-4">
@@ -207,7 +274,7 @@ export default function UploadWidget() {
               Your files have been sent successfully.
             </p>
             <div className="mt-5 rounded-xl bg-brand-bg p-3 text-sm font-mono text-brand-ink/70 break-all border border-brand-grayLight">
-              https://fileninja.cloud/d/{Math.random().toString(36).slice(2, 10)}
+              {typeof window !== "undefined" ? `${window.location.origin}/d/${transferId}` : ""}
             </div>
             <button onClick={reset} className="btn-dark mt-5">
               Send another

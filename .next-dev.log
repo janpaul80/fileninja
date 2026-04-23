@@ -594,3 +594,146 @@ Learn more about webhook signing and explore webhook integration examples for va
  ✓ Compiled in 22.2s (924 modules)
  ✓ Compiled in 25.9s (924 modules)
  ✓ Compiled in 11.4s (924 modules)
+ ○ Compiling /contact ...
+ ✓ Compiled /contact in 3.3s (450 modules)
+ GET / 200 in 1263ms
+ GET / 200 in 1432ms
+ ✓ Compiled in 14.9s (926 modules)
+ ✓ Compiled in 6.8s (479 modules)
+ GET /about 200 in 1069ms
+ GET /about 200 in 942ms
+ GET / 200 in 104ms
+ ○ Compiling /pricing ...
+ ✓ Compiled /pricing in 3.2s (452 modules)
+ GET /pricing 200 in 3688ms
+ GET /login 200 in 504ms
+ ○ Compiling /signup ...
+ ✓ Compiled /signup in 4s (457 modules)
+ GET /signup 200 in 5033ms
+ GET /about 200 in 457ms
+ GET /contact 200 in 1153ms
+ ○ Compiling /blog ...
+ ✓ Compiled /blog in 3.4s (460 modules)
+ GET /blog 200 in 4868ms
+ ○ Compiling /developer-api ...
+ ✓ Compiled /developer-api in 2.9s (462 modules)
+ GET /developer-api 200 in 3731ms
+ ○ Compiling /vault ...
+ ✓ Compiled /vault in 752ms (464 modules)
+ GET /vault 200 in 1065ms
+ ✓ Compiled /features in 353ms (466 modules)
+ GET /features 200 in 1674ms
+ GET /terms 200 in 1096ms
+ ✓ Compiled /privacy in 492ms (468 modules)
+ GET /privacy 200 in 923ms
+ ✓ Compiled /security in 387ms (470 modules)
+ GET /security 200 in 662ms
+ ✓ Compiled /dpa in 372ms (472 modules)
+ GET /dpa 200 in 638ms
+ ✓ Compiled /cookies in 441ms (474 modules)
+ GET /cookies 200 in 632ms
+ ○ Compiling /api/contact ...
+ ✓ Compiled /api/contact in 2.3s (504 modules)
+[contact] inbound message: {
+  name: 'Test User',
+  email: 'test@example.com',
+  subject: 'Hello',
+  preview: 'This is a valid message body.',
+  at: '2026-04-23T17:30:24.664Z'
+}
+[contact] resend delivery failed: 401 {"statusCode":401,"name":"validation_error","message":"API key is invalid"}
+ POST /api/contact 200 in 4830ms
+ POST /api/contact 400 in 19ms
+ POST /api/contact 400 in 11ms
+ POST /api/contact 400 in 28ms
+ POST /api/contact 400 in 35ms
+ POST /api/contact 400 in 41ms
+ POST /api/contact 400 in 161ms
+ POST /api/contact 400 in 492ms
+ POST /api/contact 400 in 392ms
+ POST /api/contact 400 in 254ms
+ POST /api/contact 400 in 185ms
+ POST /api/contact 400 in 362ms
+ POST /api/contact 400 in 119ms
+ GET /about 200 in 1138ms
+ ✓ Compiled in 13s (809 modules)
+ GET /about 200 in 216ms
+ GET /about 200 in 1055ms
+ GET /about 200 in 1002ms
+   Reload env: .env.local
+ ✓ Compiled in 6.8s (809 modules)
+   Reload env: .env.local
+ ✓ Compiled in 13.2s (809 modules)
+ ○ Compiling /_not-found ...
+ ✓ Compiled /_not-found in 4.4s (798 modules)
+ GET /logo.svg 404 in 6843ms
+ GET /terms 200 in 1019ms
+   Reload env: .env.local
+ ✓ Compiled in 6.1s (795 modules)
+ ✓ Compiled in 21.6s (809 modules)
+ ⚠ ./src/components/Header.tsx
+Attempted import error: 'UserIcon' is not exported from './icons' (imported as 'UserIcon').
+
+Import trace for requested module:
+./src/components/Header.tsx
+
+./src/components/Header.tsx
+Attempted import error: 'UserIcon' is not exported from './icons' (imported as 'UserIcon').
+
+Import trace for requested module:
+./src/components/Header.tsx
+ ⚠ ./src/components/Header.tsx
+Attempted import error: 'UserIcon' is not exported from './icons' (imported as 'UserIcon').
+
+Import trace for requested module:
+./src/components/Header.tsx
+
+./src/components/Header.tsx
+Attempted import error: 'UserIcon' is not exported from './icons' (imported as 'UserIcon').
+
+Import trace for requested module:
+./src/components/Header.tsx
+ ⨯ ./src/components/UploadWidget.tsx:6:1
+Module not found: Can't resolve 'uuid'
+[0m [90m 4 |[39m [36mimport[39m { [33mUploadIcon[39m[33m,[39m [33mFileIcon[39m[33m,[39m [33mSendIcon[39m[33m,[39m [33mCheckIcon[39m[33m,[39m [33mXIcon[39m[33m,[39m [33mLoaderIcon[39m } [36mfrom[39m [32m"./icons"[39m[33m;[39m[0m
+[0m [90m 5 |[39m [36mimport[39m { createClient } [36mfrom[39m [32m"@/lib/supabase/client"[39m[33m;[39m[0m
+[0m[31m[1m>[22m[39m[90m 6 |[39m [36mimport[39m { v4 [36mas[39m uuidv4 } [36mfrom[39m [32m"uuid"[39m[33m;[39m[0m
+[0m [90m   |[39m [31m[1m^[22m[39m[0m
+[0m [90m 7 |[39m[0m
+[0m [90m 8 |[39m type [33mStatus[39m [33m=[39m [32m"idle"[39m [33m|[39m [32m"selected"[39m [33m|[39m [32m"uploading"[39m [33m|[39m [32m"complete"[39m [33m|[39m [32m"error"[39m[33m;[39m[0m
+[0m [90m 9 |[39m[0m
+
+https://nextjs.org/docs/messages/module-not-found
+ ⨯ ./src/components/UploadWidget.tsx:6:1
+Module not found: Can't resolve 'uuid'
+[0m [90m 4 |[39m [36mimport[39m { [33mUploadIcon[39m[33m,[39m [33mFileIcon[39m[33m,[39m [33mSendIcon[39m[33m,[39m [33mCheckIcon[39m[33m,[39m [33mXIcon[39m[33m,[39m [33mLoaderIcon[39m } [36mfrom[39m [32m"./icons"[39m[33m;[39m[0m
+[0m [90m 5 |[39m [36mimport[39m { createClient } [36mfrom[39m [32m"@/lib/supabase/client"[39m[33m;[39m[0m
+[0m[31m[1m>[22m[39m[90m 6 |[39m [36mimport[39m { v4 [36mas[39m uuidv4 } [36mfrom[39m [32m"uuid"[39m[33m;[39m[0m
+[0m [90m   |[39m [31m[1m^[22m[39m[0m
+[0m [90m 7 |[39m[0m
+[0m [90m 8 |[39m type [33mStatus[39m [33m=[39m [32m"idle"[39m [33m|[39m [32m"selected"[39m [33m|[39m [32m"uploading"[39m [33m|[39m [32m"complete"[39m [33m|[39m [32m"error"[39m[33m;[39m[0m
+[0m [90m 9 |[39m[0m
+
+https://nextjs.org/docs/messages/module-not-found
+ ⨯ ./src/components/UploadWidget.tsx:6:1
+Module not found: Can't resolve 'uuid'
+[0m [90m 4 |[39m [36mimport[39m { [33mUploadIcon[39m[33m,[39m [33mFileIcon[39m[33m,[39m [33mSendIcon[39m[33m,[39m [33mCheckIcon[39m[33m,[39m [33mXIcon[39m[33m,[39m [33mLoaderIcon[39m } [36mfrom[39m [32m"./icons"[39m[33m;[39m[0m
+[0m [90m 5 |[39m [36mimport[39m { createClient } [36mfrom[39m [32m"@/lib/supabase/client"[39m[33m;[39m[0m
+[0m[31m[1m>[22m[39m[90m 6 |[39m [36mimport[39m { v4 [36mas[39m uuidv4 } [36mfrom[39m [32m"uuid"[39m[33m;[39m[0m
+[0m [90m   |[39m [31m[1m^[22m[39m[0m
+[0m [90m 7 |[39m[0m
+[0m [90m 8 |[39m type [33mStatus[39m [33m=[39m [32m"idle"[39m [33m|[39m [32m"selected"[39m [33m|[39m [32m"uploading"[39m [33m|[39m [32m"complete"[39m [33m|[39m [32m"error"[39m[33m;[39m[0m
+[0m [90m 9 |[39m[0m
+
+https://nextjs.org/docs/messages/module-not-found
+ ⨯ ./src/components/UploadWidget.tsx:6:1
+Module not found: Can't resolve 'uuid'
+[0m [90m 4 |[39m [36mimport[39m { [33mUploadIcon[39m[33m,[39m [33mFileIcon[39m[33m,[39m [33mSendIcon[39m[33m,[39m [33mCheckIcon[39m[33m,[39m [33mXIcon[39m[33m,[39m [33mLoaderIcon[39m } [36mfrom[39m [32m"./icons"[39m[33m;[39m[0m
+[0m [90m 5 |[39m [36mimport[39m { createClient } [36mfrom[39m [32m"@/lib/supabase/client"[39m[33m;[39m[0m
+[0m[31m[1m>[22m[39m[90m 6 |[39m [36mimport[39m { v4 [36mas[39m uuidv4 } [36mfrom[39m [32m"uuid"[39m[33m;[39m[0m
+[0m [90m   |[39m [31m[1m^[22m[39m[0m
+[0m [90m 7 |[39m[0m
+[0m [90m 8 |[39m type [33mStatus[39m [33m=[39m [32m"idle"[39m [33m|[39m [32m"selected"[39m [33m|[39m [32m"uploading"[39m [33m|[39m [32m"complete"[39m [33m|[39m [32m"error"[39m[33m;[39m[0m
+[0m [90m 9 |[39m[0m
+
+https://nextjs.org/docs/messages/module-not-found

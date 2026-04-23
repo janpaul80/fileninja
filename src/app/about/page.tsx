@@ -19,7 +19,8 @@ const ventures = [
   "KuikChat",
   "SafeBite",
   "GetWinked",
-  "VidHart"
+  "VidHart",
+  "FileNinja"
 ];
 
 export default function AboutPage() {
@@ -61,22 +62,22 @@ export default function AboutPage() {
                 workflows.
               </p>
               <p>
-                Fileninja is more than just a file-sharing tool — it&apos;s
+                Fileninja is more than just a file-sharing tool, it&apos;s
                 part of a larger vision.
               </p>
               <p>
                 Paul is actively developing a growing ecosystem of advanced
                 platforms, including <strong>CoderXP</strong>, an autonomous
                 AI coding environment, alongside Rev-Dev, HeftCoder AI,
-                MailBlazed, BoltClaw, KuikChat, SafeBite, GetWinked, and
-                VidHart. Each project is designed with one goal in mind: to
+                MailBlazed, BoltClaw, KuikChat, SafeBite, GetWinked, VidHart,
+                and FileNinja. Each project is designed with one goal in mind: to
                 simplify complex processes and push technology toward a more
                 autonomous, intelligent future.
               </p>
               <p>
                 With Fileninja, the focus is on speed and simplicity. No
                 unnecessary steps. No distractions. Just a clean, powerful way
-                to transfer files instantly — whether you&apos;re working,
+                to transfer files instantly, whether you&apos;re working,
                 building, or sharing ideas.
               </p>
               <div className="not-prose border-l-4 border-brand-red pl-5 py-2 my-8 bg-white/70 rounded-r-lg">
@@ -127,7 +128,7 @@ export default function AboutPage() {
                   Paul Hartmann
                 </p>
                 <p className="text-sm text-brand-ink/60">
-                  Founder & Engineer · Building from Ecuador
+                  Founder & Engineer
                 </p>
               </div>
             </div>
