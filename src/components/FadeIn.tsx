@@ -45,6 +45,7 @@ export default function FadeIn({
     willChange: "opacity, transform"
   };
 
-  // @ts-expect-error dynamic tag with ref
+  // Suppress dynamic ref warning if it appears
+  // @ts-ignore
   return React.createElement(Tag, { ref, className, style }, children);
 }
