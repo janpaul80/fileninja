@@ -84,27 +84,62 @@ export async function POST(request: NextRequest) {
     }
 
     const origin = siteOrigin(request);
-    const session = await stripe.checkout.sessions.create({
-      mode: "subscription",
-      customer: customerId,
-      line_items: [{ price: priceId, quantity: 1 }],
-      allow_promotion_codes: true,
-      billing_address_collection: "auto",
-      success_url: `${origin}/dashboard?checkout=success`,
-      cancel_url: `${origin}/pricing?checkout=cancelled`,
-      subscription_data: {
+    let session;
+    try {
+      session = await stripe.checkout.sessions.create({
+        mode: "subscription",
+        customer: customerId,
+        line_items: [{ price: priceId, quantity: 1 }],
+        allow_promotion_codes: true,
+        billing_address_collection: "auto",
+        success_url: `${origin}/dashboard?checkout=success`,
+        cancel_url: `${origin}/pricing?checkout=cancelled`,
+        subscription_data: {
+          metadata: {
+            supabase_user_id: user.id,
+            plan,
+            cycle
+          }
+        },
         metadata: {
           supabase_user_id: user.id,
           plan,
           cycle
         }
-      },
-      metadata: {
-        supabase_user_id: user.id,
-        plan,
-        cycle
+      });
+    } catch (err: any) {
+      // If the customer ID exists but is from the wrong mode (Test vs Live), 
+      // Stripe throws a 'No such customer' error. 
+      if (err.message?.includes("No such customer")) {
+        // Clear the invalid ID from the profile
+        await admin.from("profiles").update({ stripe_customer_id: null }).eq("id", user.id);
+        
+        // Retry creating the session WITHOUT a customer ID (it will create a new one)
+        session = await stripe.checkout.sessions.create({
+          mode: "subscription",
+          customer_email: user.email!,
+          line_items: [{ price: priceId, quantity: 1 }],
+          allow_promotion_codes: true,
+          billing_address_collection: "auto",
+          success_url: `${origin}/dashboard?checkout=success`,
+          cancel_url: `${origin}/pricing?checkout=cancelled`,
+          subscription_data: {
+            metadata: {
+              supabase_user_id: user.id,
+              plan,
+              cycle
+            }
+          },
+          metadata: {
+            supabase_user_id: user.id,
+            plan,
+            cycle
+          }
+        });
+      } else {
+        throw err;
       }
-    });
+    }
 
     return NextResponse.json({ url: session.url });
   } catch (err: any) {
